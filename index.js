@@ -14,7 +14,11 @@ readdir(dirname, async (err, files) => {
         let raw = /\*(?<name>.*?)\*\n(?<lang>.*?) -- Size: (?<size>.*?) \((?<page>.*?) p.*\n<(?<link>.*?)>/ig.exec(msg.text)
         if (raw) {
           mangaCount++
-          let { name, lang, size, page, link } = raw.groups
+          let manga = Object.assign(raw.groups, {
+            user_id: 'g_845dfa74f0',
+            cover: (msg.attachments || [{}])[0].image_url || null,
+            requested: new Date()
+          })
         }
       }
     }
