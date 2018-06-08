@@ -29,14 +29,15 @@ readdir(dirname, async (err, files) => {
     for (let l = 0; l < data.length; l++) {
       const msg = data[l]
       if (msg.attachments) {
-        let raw = /\*(?<name>.*?)\*\n(?<lang>.*?) -- Size: (?<size>.*?) \((?<page>.*?) p.*\n<(?<link>.*?)>/ig.exec(msg.text)
+        let raw = /\*(?<name>.*?)\*\n(?<language>.*?) -- Size: (?<size>.*?) \((?<page>.*?) p.*\n<(?<link>.*?)>/ig.exec(msg.text)
         if (raw) {
           mangaCount++
+          raw.groups.language = raw.groups.language.trim()
           let manga = Object.assign(raw.groups, {
-            user_id: 'g_845dfa74f0',
+            user_id: 'g_1d2db0edc2',
             cover: (msg.attachments || [{}])[0].image_url || null
           })
-          let res = await apiTouno('/exhentai/manga/new', manga)
+          let res = await apiTouno('/exhentai/manga', manga)
           if (res.error) console.log(res)
         }
       }
